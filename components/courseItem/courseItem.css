@@ -1,0 +1,35 @@
+.course-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:16px;
+
+    padding:12px 18px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    margin-bottom:10px;
+
+    background:white;
+
+}
+
+.course-info{
+
+    flex:1;
+
+}
+
+.course-status{
+
+    width:120px;
+
+    padding:6px;
+
+}

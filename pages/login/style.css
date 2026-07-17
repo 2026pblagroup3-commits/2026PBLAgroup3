@@ -1,0 +1,56 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+#google-login{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:14px;
+
+    width:280px;
+
+    height:48px;
+
+    border:1px solid #dadce0;
+
+    border-radius:8px;
+
+    background:white;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:.2s;
+
+}
+
+#google-login:hover{
+
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+
+}
+
+#google-login img{
+
+    width:20px;
+
+    height:20px;
+
+}
+
+#footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 30px;
+}

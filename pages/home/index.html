@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>ホーム - 履修登録チェッカー</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script type="module" src="script.js" defer></script>
+    <link rel="stylesheet" href="../../components/header/header.css">
+</head>
+<body>
+
+   <div id="header"></div>
+
+    <main>
+
+        <section class="welcome">
+            <h2>ようこそ！</h2>
+
+            <p class="description">
+                このツールは大学生が卒業までにあと何単位必要で、
+                そのために何の授業を取ればいいのかを確認・管理するためのチェッカーです。
+            </p>
+        </section>
+
+        <section class="guide-card">
+
+            <h3>～使い方～</h3>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-text">
+                    <h4>授業を登録する</h4>
+                    <p>
+                        「入力ページ」からこれまでに修得した授業と、
+                        今期とる予定の授業をリストから選びます。
+                    </p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">
+                    <h4>結果を確認する</h4>
+                    <p>
+                        「結果ページ」で卒業までに必要な単位数や、
+                        A群・B群ごとの不足単位を確認します。
+                    </p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">
+                    <h4>データを保存する</h4>
+                    <p>
+                        結果画面の「保存」ボタンを押すことで、
+                        次回のログイン時も続きから確認できます。
+                    </p>
+                </div>
+            </div>
+
+        </section>
+        
+        <button id="start-button">
+
+            <span>履修登録を開始する →</span>
+            
+        </button>
+
+    </main>
+
+</body>
+</html>

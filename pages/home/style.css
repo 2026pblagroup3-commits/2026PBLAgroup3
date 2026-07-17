@@ -1,0 +1,120 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"Yu Gothic","Meiryo",sans-serif;
+    background:#f3f3f3;
+    color:#222;
+}
+
+
+
+.username{
+    font-size:2rem;
+    margin-bottom:10px;}
+
+/* メイン */
+main{
+    max-width:1000px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+/* ようこそ */
+.welcome h2{
+    display:inline-block;
+    font-size:3rem;
+    margin-bottom:30px;
+    padding-bottom:5px;
+    border-bottom:5px solid #5587e8;
+}
+
+.description{
+    font-size:1.8rem;
+    line-height:1.7;
+    margin-bottom:40px;
+}
+
+/* カード */
+.guide-card{
+    background:#e9e9e9;
+    border-radius:20px;
+    padding:30px;
+}
+
+.guide-card h3{
+    font-size:2.5rem;
+    margin-bottom:30px;
+}
+
+.step{
+    display:flex;
+    margin-bottom:30px;
+}
+
+.step:last-child{
+    margin-bottom:0;
+}
+
+.step-number{
+    width:44px;
+    height:44px;
+
+    border-radius:50%;
+
+    background:#6674f0;
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:1.8rem;
+    font-weight:bold;
+
+    margin-right:25px;
+    flex-shrink:0;
+}
+
+.step-text h4{
+    font-size:2rem;
+    margin-bottom:10px;
+}
+
+.step-text p{
+    font-size:1.2rem;
+    line-height:1.6;
+}
+
+/* ボタン */
+#start-button{
+    display:block;
+    width:fit-content;
+    text-align:center;
+
+    margin:35px auto;
+
+    padding:18px 45pt;
+
+    border:none;
+    border-radius:50px;
+
+    background:#5587e8;
+    color:white;
+
+    font-size:2rem;
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+#start-button:hover{
+
+    background:#4877d4;
+    
+    box-shadow:
+        0 12px 28px rgba(0,0,0,.3);;
+}

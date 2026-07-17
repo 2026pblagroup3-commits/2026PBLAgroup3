@@ -1,0 +1,31 @@
+.progress-bar{
+
+    display:flex;
+
+    height:12px;
+
+    border-radius:6px;
+
+    overflow:hidden;
+
+    margin-bottom:20px;
+
+}
+
+.progress-completed{
+
+    background:#5587e8;
+
+}
+
+.progress-planned{
+
+    background:#FFB300;
+
+}
+
+.progress-remaining{
+
+    background:#E0E0E0;
+
+}

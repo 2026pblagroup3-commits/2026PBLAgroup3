@@ -1,3 +1,7 @@
+body{
+    background:#f3f3f3;
+}
+
 .login-container {
     display: flex;
     justify-content: center;

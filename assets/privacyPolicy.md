@@ -57,6 +57,6 @@
 
 本ポリシーに関するお問い合わせは、本サービスの管理者までお願いいたします。
 
-GitHub: https://github.com/Lumium64
+GitHub: https://github.com/2026pblagroup3-commits
 
 制定日：2026年7月13日

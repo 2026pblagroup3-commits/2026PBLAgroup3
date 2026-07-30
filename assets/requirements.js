@@ -4,7 +4,7 @@ export const REQUIREMENTS = {
 
     "A群": 8,
 
-    "B群": 6,
+    "B群": 8,
 
     "C群": 6,
 

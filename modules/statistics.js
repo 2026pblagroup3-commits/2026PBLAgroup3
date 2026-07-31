@@ -1,100 +1,58 @@
 import * as CourseManager from "./courseManager.js";
 import * as UserData from "../firebase/userData.js";
-
 import { REQUIREMENTS } from "../assets/requirements.js";
 
-export function calculateCategory(category) {
+function summarizeCourses(courses) {
+    return courses.reduce((summary, course) => {
+        const status = UserData.getCourseStatus(course.code);
 
-    let completed = 0;
-    let planned = 0;
+        if (status === "completed") summary.completed += course.credits;
+        if (status === "planned") summary.planned += course.credits;
 
-    const courses =
-        CourseManager.getCoursesByCategory(category);
+        return summary;
+    }, { completed: 0, planned: 0 });
+}
 
-    for (const course of courses) {
-
-        const data =
-            UserData.getCourse(course.code);
-
-        if (!data) continue;
-
-        switch (data.status) {
-
-            case "completed":
-                completed += course.credits;
-                break;
-
-            case "planned":
-                planned += course.credits;
-                break;
-
-        }
-
-    }
-
-    const required =
-        REQUIREMENTS[category] ?? 0;
+function createStatistics(completed, planned, required) {
+    const countedCompleted = Math.min(completed, required);
+    const countedPlanned = Math.min(
+        planned,
+        Math.max(required - countedCompleted, 0)
+    );
 
     return {
-
         completed,
-
         planned,
-
         required,
-
-        progress:
-
-            Math.min(
-
-                (completed + planned)
-                / required,
-
-                1
-
-            )
-
+        progress: required === 0
+            ? 0
+            : (countedCompleted + countedPlanned) / required
     };
+}
 
+export function calculateCategory(category) {
+    const { completed, planned } = summarizeCourses(
+        CourseManager.getCoursesByCategory(category)
+    );
+
+    return createStatistics(completed, planned, REQUIREMENTS[category] ?? 0);
 }
 
 export function calculateOverall() {
+    const total = CourseManager.getCategories()
+        .map(calculateCategory)
+        .reduce((result, stat) => {
+            const completed = Math.min(stat.completed, stat.required);
+            const planned = Math.min(
+                stat.planned,
+                Math.max(stat.required - completed, 0)
+            );
 
-    let completed = 0;
-    let planned = 0;
-    let required = 0;
+            result.completed += completed;
+            result.planned += planned;
+            result.required += stat.required;
+            return result;
+        }, { completed: 0, planned: 0, required: 0 });
 
-    for (const category of CourseManager.getCategories()) {
-
-        const stat = calculateCategory(category);
-
-        completed += Math.min(
-            stat.completed,
-            stat.required
-        );
-
-        planned += Math.min(
-            stat.planned,
-            stat.required - Math.min(stat.completed, stat.required)
-        );
-
-        required += stat.required;
-
-    }
-
-    return {
-
-        completed,
-
-        planned,
-
-        required,
-
-        progress:
-            required === 0
-                ? 0
-                : (completed + planned) / required
-
-    };
-
+    return createStatistics(total.completed, total.planned, total.required);
 }

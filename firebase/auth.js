@@ -32,3 +32,19 @@ export function observeAuth(callback){
     return onAuthStateChanged(auth, callback);
 
 }
+
+/* Firebaseの初回認証判定を待つ */
+export function waitForAuth() {
+    return new Promise((resolve, reject) => {
+        let unsubscribe;
+
+        unsubscribe = onAuthStateChanged(
+            auth,
+            user => {
+                unsubscribe?.();
+                resolve(user);
+            },
+            reject
+        );
+    });
+}

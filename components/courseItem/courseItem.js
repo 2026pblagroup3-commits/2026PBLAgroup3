@@ -12,16 +12,21 @@ export function createCourseItem(course) {
     const info = document.createElement("div");
     info.className = "course-info";
 
-    info.innerHTML = `
-        <div class="course-name">${course.name}</div>
-        <div class="course-detail">
-            ${course.code} /
-            ${course.category} /
-            ${course.year}年 /
-            ${course.semester} /
-            ${course.credits}単位
-        </div>
-    `;
+    const name = document.createElement("div");
+    name.className = "course-name";
+    name.textContent = course.name;
+
+    const detail = document.createElement("div");
+    detail.className = "course-detail";
+    detail.textContent = [
+        course.code,
+        course.category,
+        `${course.year}年`,
+        course.semester,
+        `${course.credits}単位`
+    ].join(" / ");
+
+    info.append(name, detail);
 
     //--------------------------------
     // 履修状態

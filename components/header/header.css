@@ -45,6 +45,7 @@
 
     display:flex;
     align-items:center;
+    gap:16px;
 
 }
 
@@ -53,4 +54,22 @@
     font-size:1.2rem;
     font-weight:500;
 
+}
+
+.app-logout{
+    padding:8px 14px;
+    border:1px solid white;
+    border-radius:6px;
+    background:transparent;
+    color:white;
+    cursor:pointer;
+}
+
+.app-logout:hover{
+    background:rgba(255,255,255,.15);
+}
+
+.app-logout:disabled{
+    cursor:wait;
+    opacity:.6;
 }

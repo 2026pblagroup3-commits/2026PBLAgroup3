@@ -8,7 +8,7 @@ export async function load(path = "../../assets/courses.csv") {
     const response = await fetch(path);
 
     if (!response.ok) {
-        throw new Error(`Failed to load ${path}`);
+        throw new Error(`科目データを読み込めませんでした: ${path} (${response.status})`);
     }
 
     const text = await response.text();
@@ -22,7 +22,7 @@ function parseCSV(csv) {
 
     courses = {};
 
-    const lines = csv.trim().split(/\r?\n/);
+    const lines = csv.trim().replace(/^\uFEFF/, "").split(/\r?\n/);
 
     for (let i = 1; i < lines.length; i++) {
 
@@ -34,6 +34,10 @@ function parseCSV(csv) {
             semester,
             credits
         ] = lines[i].split(",");
+
+        if (!code || !name || !category) {
+            throw new Error(`科目CSVの${i + 1}行目が不正です`);
+        }
 
         courses[code] = {
             code,
@@ -104,31 +108,13 @@ export function search(keyword) {
 }
 
 export function getCategories() {
+    const orderOf = category => {
+        const index = CATEGORY_ORDER.indexOf(category);
+        return index === -1 ? CATEGORY_ORDER.length : index;
+    };
 
-    const categories = [
-
-        ...new Set(
-
-            getAll().map(
-                course => course.category
-            )
-
-        )
-
-    ];
-
-    categories.sort(
-
-        (a, b) =>
-
-        CATEGORY_ORDER.indexOf(a)
-        -
-        CATEGORY_ORDER.indexOf(b)
-
-    );
-
-    return categories;
-
+    return [...new Set(getAll().map(course => course.category))]
+        .sort((a, b) => orderOf(a) - orderOf(b));
 }
 
 export function getCoursesByCategory(category) {

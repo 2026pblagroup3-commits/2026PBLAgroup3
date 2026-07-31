@@ -1,3 +1,5 @@
+import { logout, observeAuth } from "../../firebase/auth.js";
+
 export function createHeader(user) {
 
     const header = document.createElement("header");
@@ -43,10 +45,34 @@ export function createHeader(user) {
     const userName = document.createElement("span");
     userName.className = "app-user-name";
 
-    userName.textContent =
-        user?.displayName ?? "未ログイン";
+    const logoutButton = document.createElement("button");
+    logoutButton.className = "app-logout";
+    logoutButton.type = "button";
+    logoutButton.textContent = "ログアウト";
 
-    userArea.appendChild(userName);
+    logoutButton.addEventListener("click", async () => {
+        logoutButton.disabled = true;
+
+        try {
+            await logout();
+            location.href = "../login/";
+        } catch (error) {
+            console.error(error);
+            logoutButton.disabled = false;
+        }
+    });
+
+    function updateUser(currentUser) {
+        userName.textContent = currentUser?.displayName ?? "デモ利用中";
+        userArea.replaceChildren(userName);
+
+        if (currentUser) {
+            userArea.appendChild(logoutButton);
+        }
+    }
+
+    updateUser(user);
+    observeAuth(updateUser);
 
     //--------------------------------
 

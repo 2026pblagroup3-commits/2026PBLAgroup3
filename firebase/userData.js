@@ -4,6 +4,7 @@ import { fetchUserData, saveUserData } from "./firestore.js";
 let userData = null;
 
 let dirty = false;
+const COURSE_STATUSES = new Set(["planned", "completed"]);
 
 /* データ更新イベント */
 function notifyUpdate() {
@@ -15,11 +16,10 @@ function notifyUpdate() {
 }
 
 /* Firestoreから読み込む */
-export async function loadUserData() {
-
-    const uid = auth.currentUser.uid;
-
-    userData = await fetchUserData(uid);
+export async function loadUserData(uid = null) {
+    userData = uid
+        ? await fetchUserData(uid)
+        : { courses: {} };
 
     if (userData == null) {
 
@@ -28,6 +28,8 @@ export async function loadUserData() {
         };
 
     }
+
+    userData.courses ??= {};
 
     dirty = false;
 
@@ -51,24 +53,22 @@ export function isDirty() {
 
 /* 科目情報を設定 */
 export function setCourse(code, status) {
-
-    userData.courses[code] = {
-        status
-    };
-
-    dirty = true;
-
+    setCourseStatus(code, status);
 }
 
 /* 状態変更 */
 export function setCourseStatus(code, status) {
 
     if (status === "none") {
-
         deleteCourse(code);
         return;
-
     }
+
+    if (!COURSE_STATUSES.has(status)) {
+        throw new Error(`不正な履修状態です: ${status}`);
+    }
+
+    if (getCourseStatus(code) === status) return;
 
     userData.courses[code] = {
         status
@@ -101,13 +101,13 @@ export function getCourse(code) {
 
 /* 全科目取得 */
 export function getCourses() {
-
-    return userData.courses;
+    return userData?.courses ?? {};
 
 }
 
 /* 科目削除 */
 export function deleteCourse(code) {
+    if (!getCourse(code)) return;
 
     delete userData.courses[code];
 
@@ -118,8 +118,11 @@ export function deleteCourse(code) {
 
 /* Firestoreへ保存 */
 export async function save() {
+    if (!dirty) return false;
 
-    if (!dirty) return;
+    if (!auth.currentUser) {
+        throw new Error("保存するにはログインが必要です");
+    }
 
     await saveUserData(
         auth.currentUser.uid,
@@ -127,5 +130,5 @@ export async function save() {
     );
 
     dirty = false;
-
+    return true;
 }
